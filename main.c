@@ -3,7 +3,7 @@
 #include <string.h>
 #define MAX 100
 
-long long euclidesExtendido(long long a, long long b);
+long long euclidesEstendido(long long a, long long b);
 
 int main()
 {   
@@ -56,8 +56,8 @@ int main()
     //vetor para pegar menssagem decodificada
     int decodificar[MAX];
     
-    // Euclides extendido para achar s de e(mod totiente)
-    long long inverso = euclidesExtendido(e, totiente);
+    // Euclides estendido para achar s de e(mod totiente)
+    long long inverso = euclidesEstendido(e, totiente);
     //Garantir que o s é positivo, portanto o inverso
     while (inverso < 0)
     {
@@ -88,7 +88,7 @@ int main()
     }
 }
 
-long long euclidesExtendido(long long a, long long b)
+long long euclidesEstendido(long long a, long long b)
 {
     long long s, t, quociente;
     long long s0 = 1;
