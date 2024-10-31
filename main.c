@@ -3,6 +3,7 @@
 #include <string.h>
 #define MAX 100
 
+long long euclidesExtendido(long long a, long long b);
 
 int main()
 {   
@@ -55,28 +56,22 @@ int main()
     //vetor para pegar menssagem decodificada
     int decodificar[MAX];
     
-    //achar o inverso modulo (p-1)*(q-1)
-    long long w = 0;
-    
-    for (int i = 1; i < totiente; i++)
+    // Euclides extendido para achar s de e(mod totiente)
+    long long inverso = euclidesExtendido(e, totiente);
+    //Garantir que o s é positivo, portanto o inverso
+    while (inverso < 0)
     {
-        if ((i*e)%totiente == 1)
-        {
-            //printf("%lld\n",(i*e)%totiente);
-            //printf("%d\n", i);
-            w = i;
-            break;
-        }
+        inverso += totiente;
     }
     
-    printf("\nchave decodificacao: %lld\n", w);
+    printf("\nchave decodificacao: %lld\n", inverso);
     
-    //Pegar numero congruente ao numero codificado elevado ao w mod n;
+    //Pegar numero congruente ao numero codificado elevado ao inverso mod n;
     printf("Numero decodificado: ");
     for (int i = 0; i < tamanho; i++)
     {
         long long v = 1;
-        for (int j = 0; j < w; j++)
+        for (int j = 0; j < inverso; j++)
         {
             v = (v * codificada[i]) % n;
         }
@@ -91,4 +86,36 @@ int main()
     {
         printf("%c", decodificar[i]);
     }
+}
+
+long long euclidesExtendido(long long a, long long b)
+{
+    long long s, t, quociente;
+    long long s0 = 1;
+    long long s1 = 0;
+    long long t0 = 0;
+    long long t1 = 1;
+
+    for (int i = 1; b != 0; i++)
+    {
+        if (i >= 2)
+        {
+            s = s0 - s1 * quociente;
+            t = t0 - t1 * quociente;
+
+            s0 = s1;
+            s1 = s;
+            t0 = t1;
+            t1 = t;
+        }
+        quociente = a / b;
+
+        long long temp = b;
+        b = a % b;
+        a = temp;
+        
+    }
+    if (a < 0)
+        return -s;
+    return s;
 }
