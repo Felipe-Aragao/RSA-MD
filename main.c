@@ -11,8 +11,6 @@ ull descriptografar(ull codigo, ull d, ull n);
 ull mod_multiplicao(ull c, ull d, ull n);
 long long euclidesEstendido(long long a, long long b);
 
-
-//FIXME: Está dando erro para números pequenos, provavelmente o problema e na parte da descriptografia
 int main()
 {   
     int modo;
@@ -46,6 +44,7 @@ int main()
 
         printf("e: ");
         scanf("%llu", &e);
+        //TODO: Confirmar que e é válido
         printf("n: ");
         scanf("%llu", &n);
 
@@ -69,6 +68,8 @@ int main()
         scanf("%llu", &q);
         printf("e: ");
         scanf("%llu", &e);
+        //TODO: Confirmar que e é válido
+        //TODO: Confirmar que P e Q são números primos
 
         FILE *cript;
         FILE *descript;
@@ -96,66 +97,6 @@ int main()
         fclose(cript);
         fclose(descript);
     }
-
-/*     //Entrada da mesnsagem pelo usúario
-    char menssagem[MAX];
-    printf("Menssagem: ");
-    getchar();
-    gets(menssagem);
-
-    int tamanho = strlen(menssagem);
-    printf("Tamanho: %d\n", tamanho);
-
-    //p e q devem ser numeros primos
-    //TODO: Confirmar que p e q são primos
-    p = 999863;
-    q = 999671;
-    
-    //modular
-    n = p*q;
-    
-    //Achar o totiente (phi)
-    ull totiente = (p-1)*(q-1);
-    printf("Totiente: %lld\n", totiente);
-    
-    //e e totiente devem ser primos entre si.
-    //TODO: Confirmar que e e totiente são primos entre si
-    printf("e: ");
-    scanf("%llu", &e);
-
-    //Criptografar
-    ull codificada[MAX];
-    printf("Mensagem codificada: ");
-    for (int i = 0; i < tamanho; i++)
-    {
-        codificada[i] = criptografar((int) menssagem[i], e, n);
-    }
-
-    // Euclides estendido para achar s de e(mod totiente)
-    long long inverso = euclidesEstendido(e, totiente);
-    //Garantir que o s é positivo, portanto o inverso
-    while (inverso < 0)
-    {
-        inverso += totiente;
-    }
-    
-    printf("\nd: %llu\n", inverso);
-    
-    //Descriptografar
-    ull decodificar[MAX];
-    printf("Numero decodificado: ");
-    for (int i = 0; i < tamanho; i++)
-    {
-        decodificar[i] = descriptografar(codificada[i], inverso, n);
-        printf("%llu ", decodificar[i]);
-    }
-
-    //Imprimir a menssagem descriptografada
-    printf("\nMensagem decodifcada: ");
-    for (int i = 0; i < tamanho; i++)
-    {
-        printf("%c", decodificar[i]);
-    } */
 }
 
 void chave()
@@ -171,7 +112,8 @@ void chave()
     scanf("%llu", &q);
     printf("e: ");
     scanf("%llu", &e);
-
+    //TODO: Confirmar que e é válido
+    //TODO: Confirmar que P e Q são números primos
     n = p*q;
 
     fprintf(f, "%llu %llu", e, n);
