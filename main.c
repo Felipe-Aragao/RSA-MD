@@ -4,23 +4,24 @@
 #define MAX 9999
 
 typedef unsigned long long ull;
-ull mod_multiplicao(ull c, ull d, ull n);
 
+ull criptografar(ull letra, ull e, ull n);
+ull descriptografar(ull codigo, ull d, ull n);
+ull mod_multiplicao(ull c, ull d, ull n);
 long long euclidesEstendido(long long a, long long b);
 
 int main()
 {   
+    //Entrada da mesnsagem pelo usúario
     char menssagem[MAX];
     printf("Menssagem: ");
     gets(menssagem);
 
     int tamanho = strlen(menssagem);
-
     printf("Tamanho: %d\n", tamanho);
 
-    //p e q devem ser numeros primos (grandes) que ao serem dividos por 6 deixam resto 5;
-    //lambda e totiente de Euler devem ser primos entre si.
-   
+    //p e q devem ser numeros primos
+    //TODO: Confirmar que p e q são primos
     ull p = 999863;
     ull q = 999671;
 
@@ -31,34 +32,24 @@ int main()
     //modular
     ull n = p*q;
     
-    //descobrir totiente privada
+    //Achar o totiente (phi)
     ull totiente = (p-1)*(q-1);
-    printf("totiente: %lld\n", totiente);
+    printf("Totiente: %lld\n", totiente);
     
-    //lambda == e
+    //e e totiente devem ser primos entre si.
+    //TODO: Confirmar que e e totiente são primos entre si
     int e;
+    printf("e: ");
     scanf("%d", &e);
 
-    //vetor para pegar a menssagem codificada
+    //Criptografar
     ull codificada[MAX];
-    
-    //codificacao
     printf("Mensagem codificada: ");
     for (int i = 0; i < tamanho; i++)
     {
-        ull resultado = 1;
-        for (int j = 0; j < e; j++)
-        {
-            //exponenciacao modular
-            resultado = (resultado * (int) menssagem[i]) % n;
-        }
-        codificada[i] = resultado;
-        printf("%llu ", codificada[i]);
+        codificada[i] = criptografar((int) menssagem[i], e, n);
     }
 
-    //vetor para pegar menssagem decodificada
-    ull decodificar[MAX];
-    
     // Euclides estendido para achar s de e(mod totiente)
     long long inverso = euclidesEstendido(e, totiente);
     //Garantir que o s é positivo, portanto o inverso
@@ -69,36 +60,51 @@ int main()
     
     printf("\nd: %llu\n", inverso);
     
-    //Pegar numero congruente ao numero codificado elevado ao inverso mod n;
+    //Descriptografar
+    ull decodificar[MAX];
     printf("Numero decodificado: ");
     for (int i = 0; i < tamanho; i++)
     {
-        ull resultado = 1;
-        ull d = inverso;
-        codificada[i] = codificada[i] % n;
-        while (d > 0)
-        {
-            if(d % 2 == 1)
-            {
-                resultado = mod_multiplicao(resultado, codificada[i], n);
-            }
-
-            d = d / 2;
-            
-            codificada[i] = mod_multiplicao(codificada[i], codificada[i], n);
-        }
-
-        decodificar[i] = resultado;
-        //printf("Original: %d\n", n[i]);
+        decodificar[i] = descriptografar(codificada[i], inverso, n);
         printf("%llu ", decodificar[i]);
     }
 
-    //mensagem decodificada
+    //Imprimir a menssagem descriptografada
     printf("\nMensagem decodifcada: ");
     for (int i = 0; i < tamanho; i++)
     {
         printf("%c", decodificar[i]);
     }
+}
+
+ull criptografar(ull letra, ull e, ull n)
+{
+    ull resultado = 1;
+    for (int j = 0; j < e; j++)
+    {
+        //Exponenciacao modular
+        resultado = (resultado * letra) % n;
+    }
+    printf("%llu ", resultado);
+
+    return resultado;
+}
+
+ull descriptografar(ull codigo, ull d, ull n)
+{
+    ull resultado = 1;
+    codigo = codigo % n;
+    while (d > 0)
+    {
+        if(d % 2 == 1)
+        {
+            resultado = mod_multiplicao(resultado, codigo, n);
+        }
+        d = d / 2;
+        codigo = mod_multiplicao(codigo, codigo, n);
+    }
+
+    return resultado;
 }
 
 long long euclidesEstendido(long long a, long long b)
