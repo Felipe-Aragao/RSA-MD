@@ -63,3 +63,7 @@ dkms.conf
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+desencriptado.txt
+encriptado.txt
+publica.txt
