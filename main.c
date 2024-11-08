@@ -35,12 +35,12 @@ int main()
     if (modo == 2)
     {
         //Entrada da mesnsagem pelo usúario
-        char menssagem[MAX];
-        printf("Menssagem: ");
+        char mensagem[MAX];
+        printf("Mensagem: ");
         //TODO Mudar para fgets
         getchar();
-        gets(menssagem);
-        int tamanho = strlen(menssagem);
+        gets(mensagem);
+        int tamanho = strlen(mensagem);
 
         printf("e: ");
         scanf("%llu", &e);
@@ -53,7 +53,7 @@ int main()
 
         for (int i = 0; i < tamanho; i++)
         {
-            fprintf(f, "%llu ", criptografar((int) menssagem[i], e, n));
+            fprintf(f, "%llu ", criptografar((int) mensagem[i], e, n));
         }
 
         fclose(f);
