@@ -22,6 +22,8 @@ ull mod_multiplicao(ull c, ull d, ull n);
 ull descriptografar(ull codigo, ull d, ull n);
 int primo(ull num);
 ull mdc (ull a, ull b);
+int validar_e(ull e, ull totiente);
+int validar_pq(ull p, ull q);
 
 
 void on_Main_destroy(GtkWidget *widget, gpointer data)
@@ -75,19 +77,9 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
 
         ull q = strtoull(q_text, NULL, 0);
 
-        int p_primo = primo(p);
-        int q_primo = primo(q);
-
-
-        //Garantir que p e q são primos
-        if (p_primo == 0)
+        int pq_valido = validar_pq(p, q);
+        if (!pq_valido)
         {
-            printf("P não é primo\n");
-            return;
-        }
-        if (q_primo == 0)
-        {
-            printf("Q não é primo\n");
             return;
         }
         
@@ -96,12 +88,11 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
 
         ull e = strtoull(e_text, NULL, 0);
 
-        //Achar totiente
         ull totiente = (p-1)*(q-1);
-        //Garatir que e e o totiente são coprimos
-        if (mdc(e, totiente) != 1)
+
+        int e_valido = validar_e(e, totiente);
+        if (!e_valido)
         {
-            printf("\"e\" e o \"totiente\" não são coprimos\n");
             return;
         }
         
@@ -153,12 +144,22 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
 
         ull e = strtoull(e_text, NULL, 0);
         
+        if (e == 0)
+        {
+            printf("e inválido\n");
+            return;
+        }
 
         //Pegar n
         const char *n_text = gtk_entry_get_text(entry_encriptar_n);
 
         ull n = strtoull(n_text, NULL, 0);
         
+        if (n == 0)
+        {
+            printf("n inválido\n");
+            return;
+        }
         
         //Entrada do texto
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(text_mensagem);
@@ -218,17 +219,9 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
 
         ull q = strtoull(q_text, NULL, 0);
 
-        int p_primo = primo(p);
-        int q_primo = primo(q);
-
-        if (p_primo == 0)
+        int pq_valido = validar_pq(p, q);
+        if (!pq_valido)
         {
-            printf("P não é primo\n");
-            return;
-        }
-        if (q_primo == 0)
-        {
-            printf("Q não é primo\n");
             return;
         }
         
@@ -239,10 +232,10 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
 
         //Achar totiente
         ull totiente = (p-1)*(q-1);
-        //Garatir que e e o totiente são coprimos
-        if (mdc(e, totiente) != 1)
+
+        int e_valido = validar_e(e, totiente);
+        if (!e_valido)
         {
-            printf("\"e\" e o \"totiente\" não são coprimos\n");
             return;
         }
         
@@ -472,4 +465,48 @@ ull mdc (ull a, ull b)
         return b;
     }
     return mdc(b, a % b);
+}
+
+int validar_e(ull e, ull totiente)
+{
+    if (e == 0)
+    {
+        printf("e inválido\n");
+        return 0;
+    }
+    //e não pode ser maior que o totiente
+    if (e >  totiente)
+    {
+        printf("e não pode ser maior que o totiente\n");
+        return 0;
+    }
+    //Garatir que e e o totiente são coprimos
+    if (mdc(e, totiente) != 1)
+    {
+        printf("\"e\" e o \"totiente\" não são coprimos\n");
+        return 0;
+    }
+
+    return 1;
+}
+
+int validar_pq(ull p, ull q)
+{
+    int p_primo = primo(p);
+    int q_primo = primo(q);
+
+
+    //Garantir que p e q são primos
+    if (p_primo == 0)
+    {
+        printf("P não é primo\n");
+        return 0;
+    }
+    if (q_primo == 0)
+    {
+        printf("Q não é primo\n");
+        return 0;
+    }
+
+    return 1;
 }
