@@ -7,7 +7,7 @@
 #define TAM 9999
 
 GtkBuilder *builder;
-GtkWidget *window;
+GtkWidget *window, *mensagem_aviso;
 GtkStack *stack;
 GtkTextView *text_mensagem, *text_show_encriptado, *text_encriptado, *text_show_desencriptado;
 GtkEntry *entry_chave_p, *entry_chave_q, *entry_chave_e, *entry_encriptar_e, *entry_encriptar_n,
@@ -29,6 +29,26 @@ int validar_pq(ull p, ull q);
 void on_Main_destroy(GtkWidget *widget, gpointer data)
 {
         gtk_main_quit();
+}
+
+    void mensagem_avisar(char text[], char secondaty_text[], char icon_name[])
+{
+
+    g_object_set(mensagem_aviso, "text", text, NULL);
+    g_object_set(mensagem_aviso, "secondary_text", secondaty_text, NULL);
+    g_object_set(mensagem_aviso, "icon_name", icon_name, NULL);
+
+    GtkWidget *primario = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(mensagem_aviso));
+    GtkStyleContext *context1 = gtk_widget_get_style_context(primario);
+    gtk_style_context_add_class(context1, "dialog_primary");
+
+    GtkWidget *secundario = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(mensagem_aviso));
+    GtkStyleContext *context2 = gtk_widget_get_style_context(secundario);
+    gtk_style_context_add_class(context2, "dialog_secundary");
+
+    gtk_widget_show_all(mensagem_aviso);
+    gtk_dialog_run(GTK_DIALOG(mensagem_aviso));
+    gtk_widget_hide(mensagem_aviso);
 }
 
 void on_button_chave_clicked(GtkWidget *widget, gpointer data)
@@ -146,7 +166,7 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
         
         if (e == 0)
         {
-            printf("e inválido\n");
+            mensagem_avisar("ERRO", "\"e\" inválido", "dialog-error");
             return;
         }
 
@@ -157,7 +177,7 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
         
         if (n == 0)
         {
-            printf("n inválido\n");
+            mensagem_avisar("ERRO", "\"n\" inválido", "dialog-error");
             return;
         }
         
@@ -334,6 +354,7 @@ int main (int argc, char *argv[])
         gtk_builder_connect_signals(builder, NULL);
 
         window = GTK_WIDGET(gtk_builder_get_object(builder, "Main"));
+        mensagem_aviso = GTK_WIDGET(gtk_builder_get_object(builder, "mensagem_aviso"));
         stack = GTK_STACK(gtk_builder_get_object(builder, "stack"));
         
         text_mensagem = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "text_mensagem"));
@@ -471,19 +492,19 @@ int validar_e(ull e, ull totiente)
 {
     if (e == 0)
     {
-        printf("e inválido\n");
+        mensagem_avisar("ERRO", "\"e\" inválido", "dialog-error");
         return 0;
     }
     //e não pode ser maior que o totiente
     if (e >  totiente)
     {
-        printf("e não pode ser maior que o totiente\n");
+        mensagem_avisar("ERRO", "\"e\" não pode ser maior que o totiente", "dialog-error");
         return 0;
     }
     //Garatir que e e o totiente são coprimos
     if (mdc(e, totiente) != 1)
     {
-        printf("\"e\" e o \"totiente\" não são coprimos\n");
+        mensagem_avisar("ERRO", "\"e\" e o \"totiente\" não são coprimos", "dialog-error");
         return 0;
     }
 
@@ -499,12 +520,12 @@ int validar_pq(ull p, ull q)
     //Garantir que p e q são primos
     if (p_primo == 0)
     {
-        printf("P não é primo\n");
+        mensagem_avisar("ERRO", "\"p\" não é primo", "dialog-error");
         return 0;
     }
     if (q_primo == 0)
     {
-        printf("Q não é primo\n");
+        mensagem_avisar("ERRO", "\"q\" não é primo", "dialog-error");
         return 0;
     }
 

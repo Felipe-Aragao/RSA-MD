@@ -3,10 +3,11 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkWindow" id="Main">
-    <property name="width-request">854</property>
-    <property name="height-request">480</property>
+    <property name="width-request">1280</property>
+    <property name="height-request">720</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Criptografia RSA</property>
+    <property name="icon">images\encriptado.svg</property>
     <signal name="destroy" handler="on_Main_destroy" swapped="no"/>
     <child>
       <object class="GtkStack" id="stack">
@@ -14,6 +15,7 @@
         <property name="can-focus">False</property>
         <child>
           <object class="GtkBox">
+            <property name="width-request">350</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">center</property>
@@ -102,6 +104,7 @@
         </child>
         <child>
           <object class="GtkBox">
+            <property name="width-request">350</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">center</property>
@@ -267,6 +270,7 @@
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
@@ -373,17 +377,19 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="width-request">350</property>
-                <property name="height-request">455</property>
+                <property name="width-request">520</property>
+                <property name="height-request">600</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="margin-start">5</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="margin-start">10</property>
                 <property name="margin-end">10</property>
                 <property name="shadow-type">in</property>
                 <child>
                   <object class="GtkTextView" id="text_show_encriptado">
-                    <property name="width-request">350</property>
-                    <property name="height-request">465</property>
+                    <property name="width-request">520</property>
+                    <property name="height-request">600</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="halign">end</property>
@@ -403,20 +409,22 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="width-request">350</property>
-                <property name="height-request">455</property>
+                <property name="width-request">520</property>
+                <property name="height-request">600</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="margin-start">10</property>
-                <property name="margin-end">5</property>
+                <property name="margin-end">10</property>
                 <property name="shadow-type">in</property>
                 <child>
                   <object class="GtkTextView" id="text_mensagem">
-                    <property name="width-request">350</property>
-                    <property name="height-request">465</property>
+                    <property name="width-request">520</property>
+                    <property name="height-request">600</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="halign">end</property>
+                    <property name="halign">center</property>
                     <property name="hscroll-policy">natural</property>
                     <property name="vscroll-policy">natural</property>
                     <property name="wrap-mode">word-char</property>
@@ -584,17 +592,17 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="width-request">350</property>
-                <property name="height-request">455</property>
+                <property name="width-request">520</property>
+                <property name="height-request">600</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="margin-start">10</property>
-                <property name="margin-end">5</property>
+                <property name="margin-end">10</property>
                 <property name="shadow-type">etched-in</property>
                 <child>
                   <object class="GtkTextView" id="text_encriptado">
-                    <property name="width-request">350</property>
-                    <property name="height-request">465</property>
+                    <property name="width-request">520</property>
+                    <property name="height-request">600</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="halign">end</property>
@@ -614,17 +622,17 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="width-request">350</property>
-                <property name="height-request">455</property>
+                <property name="width-request">520</property>
+                <property name="height-request">600</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="margin-start">5</property>
+                <property name="margin-start">10</property>
                 <property name="margin-end">10</property>
                 <property name="shadow-type">in</property>
                 <child>
                   <object class="GtkTextView" id="text_show_desencriptado">
-                    <property name="width-request">350</property>
-                    <property name="height-request">465</property>
+                    <property name="width-request">520</property>
+                    <property name="height-request">600</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="halign">end</property>
@@ -647,6 +655,36 @@
             <property name="name">desencriptar</property>
             <property name="title" translatable="yes">page1</property>
             <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMessageDialog" id="mensagem_aviso">
+    <property name="width-request">400</property>
+    <property name="height-request">100</property>
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Aviso</property>
+    <property name="window-position">center</property>
+    <property name="type-hint">dialog</property>
+    <property name="message-type">warning</property>
+    <property name="buttons">ok</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="button_dialog">
+            <property name="can-focus">False</property>
+            <property name="halign">center</property>
+            <property name="homogeneous">True</property>
+            <property name="layout-style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
           </packing>
         </child>
       </object>
