@@ -7,8 +7,9 @@ Grupo 4
 ## Windows
 **Opção 1**
 
-Baixar o executável em [releases](https://github.com/Felipe-Aragao/RSA-MD/releases)
-(O conteúdo do release é o mesmo que na pasta "executavel" presente no repositório)
+Baixar o executável em [releases](https://github.com/Felipe-Aragao/RSA-MD/releases) e rodar o arquivo main.exe
+
+(O conteúdo do release é o mesmo que o da pasta "executavel" presente no repositório)
 
 **Opção 2**
 
