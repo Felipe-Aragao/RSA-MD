@@ -15,17 +15,19 @@ Baixar o executável em [releases](https://github.com/Felipe-Aragao/RSA-MD/relea
 
 1 - Baixar [msys2](https://www.msys2.org/)
 
-2 - Pelo terminal do msys2:
+2 - Pelo terminal do msys2 UCRT64:
 `pacman -S mingw-w64-ucrt-x86_64-gcc`
 `pacman -S mingw-w64-ucrt-x86_64-gtk3`
+`pacman -S pkg-config`
 
 3 - Ir para o local de main.c e no terminal do msys2:
 ``gcc `pkg-config --cflags gtk+-3.0` -o main main.c `pkg-config --libs gtk+-3.0` ``
 
 ## Linux
 
-1 - Baixar gtk:
+1 - Baixar gtk e pkg-config:
 ``sudo apt install libgtk-3-dev``
+``sudo apt install pkgconf``
 
 2 - Abri local de main.c:
-``gcc `pkg-config --cflags gtk+-3.0` -o main main.c `pkg-config --libs gtk+-3.0` -lm``
+``gcc `pkg-config --cflags gtk+-3.0` -o main main.c `pkg-config --libs gtk+-3.0` -lm -w`` 
