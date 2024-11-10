@@ -68,20 +68,16 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
 
         ull p = strtoull(p_text, NULL, 0);
         
-        g_print("%llu\n", p);
         //Pegar q
         const char *q_text = gtk_entry_get_text(entry_chave_q);
 
         ull q = strtoull(q_text, NULL, 0);
         
-        g_print("%llu\n", q);
         //Pegar e;
         const char *e_text = gtk_entry_get_text(entry_chave_e);
 
         ull e = strtoull(e_text, NULL, 0);
         
-        g_print("%llu\n", e);
-
         //Achar n
         ull n = p * q;
 
@@ -109,7 +105,6 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
                 {
                         i--;
                 }
-                printf("a");
 
         } while (n_text[i] != EOF);
         fclose(f);
@@ -131,14 +126,12 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
 
         ull e = strtoull(e_text, NULL, 0);
         
-        g_print("%llu\n", e);
 
         //Pegar n
         const char *n_text = gtk_entry_get_text(entry_encriptar_n);
 
         ull n = strtoull(n_text, NULL, 0);
         
-        g_print("%llu\n", n);
         
         //Entrada do texto
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(text_mensagem);
@@ -153,7 +146,6 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
         strcpy(mensagem, text);
 
         int tamanho = strlen(mensagem);
-        printf("\n%d\n", tamanho);
 
         FILE *f;
         f = fopen("encriptado.txt", "w");
@@ -194,20 +186,16 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
 
         ull p = strtoull(p_text, NULL, 0);
         
-        g_print("%llu\n", p);
         //Pegar q
         const char *q_text = gtk_entry_get_text(entry_desencriptar_q);
 
         ull q = strtoull(q_text, NULL, 0);
         
-        g_print("%llu\n", q);
         //Pegar e;
         const char *e_text = gtk_entry_get_text(entry_desencriptar_e);
 
         ull e = strtoull(e_text, NULL, 0);
         
-        g_print("%llu\n", e);
-
         //Entrada do texto
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(text_encriptado);
 
@@ -240,7 +228,6 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
         ull codificada;
         while (fscanf(fencriptar, "%llu", &codificada) != EOF)
         {
-            printf("%llu ", codificada);
             fprintf(fdesencriptar, "%c", descriptografar(codificada, inverso, n));
         }
 
