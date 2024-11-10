@@ -20,6 +20,8 @@ ull criptografar(ull letra, ull e, ull n);
 long long euclidesEstendido(long long a, long long b);
 ull mod_multiplicao(ull c, ull d, ull n);
 ull descriptografar(ull codigo, ull d, ull n);
+int primo(ull num);
+ull mdc (ull a, ull b);
 
 
 void on_Main_destroy(GtkWidget *widget, gpointer data)
@@ -72,11 +74,36 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
         const char *q_text = gtk_entry_get_text(entry_chave_q);
 
         ull q = strtoull(q_text, NULL, 0);
+
+        int p_primo = primo(p);
+        int q_primo = primo(q);
+
+
+        //Garantir que p e q são primos
+        if (p_primo == 0)
+        {
+            printf("P não é primo\n");
+            return;
+        }
+        if (q_primo == 0)
+        {
+            printf("Q não é primo\n");
+            return;
+        }
         
         //Pegar e;
         const char *e_text = gtk_entry_get_text(entry_chave_e);
 
         ull e = strtoull(e_text, NULL, 0);
+
+        //Achar totiente
+        ull totiente = (p-1)*(q-1);
+        //Garatir que e e o totiente são coprimos
+        if (mdc(e, totiente) != 1)
+        {
+            printf("\"e\" e o \"totiente\" não são coprimos\n");
+            return;
+        }
         
         //Achar n
         ull n = p * q;
@@ -190,11 +217,34 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
         const char *q_text = gtk_entry_get_text(entry_desencriptar_q);
 
         ull q = strtoull(q_text, NULL, 0);
+
+        int p_primo = primo(p);
+        int q_primo = primo(q);
+
+        if (p_primo == 0)
+        {
+            printf("P não é primo\n");
+            return;
+        }
+        if (q_primo == 0)
+        {
+            printf("Q não é primo\n");
+            return;
+        }
         
         //Pegar e;
         const char *e_text = gtk_entry_get_text(entry_desencriptar_e);
 
         ull e = strtoull(e_text, NULL, 0);
+
+        //Achar totiente
+        ull totiente = (p-1)*(q-1);
+        //Garatir que e e o totiente são coprimos
+        if (mdc(e, totiente) != 1)
+        {
+            printf("\"e\" e o \"totiente\" não são coprimos\n");
+            return;
+        }
         
         //Entrada do texto
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(text_encriptado);
@@ -214,8 +264,7 @@ void on_button_desencriptar_clicked(GtkWidget *widget, gpointer data)
         fclose(fencriptar);
         
         fencriptar = fopen("encriptado.txt", "r");
-        //Totiente
-        ull totiente = (p-1)*(q-1);
+
         // Euclides estendido para achar s de e(mod totiente)
         long long inverso = euclidesEstendido(e, totiente);
         //Garantir que o s é positivo, portanto o inverso
@@ -391,4 +440,36 @@ ull mod_multiplicao(ull c, ull d, ull n)
         d = d / 2;
     }
     return resultado;
+}
+
+int primo(ull num)
+{
+    if (num == 2 || num == 3)
+    {
+        return 1;
+    }
+    else if (num <= 1 || num % 2 == 0)
+    {
+        return 0;
+    }
+    
+    ull raiz = sqrt((double) num);
+    for (ull i = 3; i <= raiz; i += 2)
+    {
+        if (num % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+ull mdc (ull a, ull b)
+{
+    if (a % b == 0)
+    {
+        if (b < 0)
+            return -b;
+        return b;
+    }
+    return mdc(b, a % b);
 }
