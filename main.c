@@ -36,7 +36,8 @@ void on_Main_destroy(GtkWidget *widget, gpointer data)
 
     g_object_set(mensagem_aviso, "text", text, NULL);
     g_object_set(mensagem_aviso, "secondary_text", secondaty_text, NULL);
-    g_object_set(mensagem_aviso, "icon_name", icon_name, NULL);
+
+    gtk_window_set_icon_from_file(GTK_WINDOW(mensagem_aviso), icon_name, NULL);
 
     GtkWidget *primario = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(mensagem_aviso));
     GtkStyleContext *context1 = gtk_widget_get_style_context(primario);
@@ -155,6 +156,8 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
         gtk_entry_set_text(entry_desencriptar_q, q_text);
         gtk_entry_set_text(entry_desencriptar_e, e_text);
 
+        mensagem_avisar("Sucesso", "Chave pública salva em publica.txt", "images/chave.png");
+
 }
 
 void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
@@ -166,7 +169,7 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
         
         if (e == 0)
         {
-            mensagem_avisar("ERRO", "\"e\" inválido", "dialog-error");
+            mensagem_avisar("ERRO", "\"e\" inválido", "images/erro.png");
             return;
         }
 
@@ -177,7 +180,7 @@ void on_button_encriptar_clicked(GtkWidget *widget, gpointer data)
         
         if (n == 0)
         {
-            mensagem_avisar("ERRO", "\"n\" inválido", "dialog-error");
+            mensagem_avisar("ERRO", "\"n\" inválido", "images/erro.png");
             return;
         }
         
@@ -371,6 +374,9 @@ int main (int argc, char *argv[])
         entry_desencriptar_p = GTK_ENTRY(gtk_builder_get_object(builder, "entry_desencriptar_p"));
         entry_desencriptar_q = GTK_ENTRY(gtk_builder_get_object(builder, "entry_desencriptar_q"));
         entry_desencriptar_e = GTK_ENTRY(gtk_builder_get_object(builder, "entry_desencriptar_e"));
+        
+        gtk_window_set_icon_from_file(GTK_WINDOW(window), "images/principal.png", NULL);
+        
         gtk_widget_show_all(window);
         gtk_main();
 
@@ -492,19 +498,19 @@ int validar_e(ull e, ull totiente)
 {
     if (e == 0)
     {
-        mensagem_avisar("ERRO", "\"e\" inválido", "dialog-error");
+        mensagem_avisar("ERRO", "\"e\" inválido", "images/erro.png");
         return 0;
     }
     //e não pode ser maior que o totiente
     if (e >  totiente)
     {
-        mensagem_avisar("ERRO", "\"e\" não pode ser maior que o totiente", "dialog-error");
+        mensagem_avisar("ERRO", "\"e\" não pode ser maior que o totiente", "images/erro.png");
         return 0;
     }
     //Garatir que e e o totiente são coprimos
     if (mdc(e, totiente) != 1)
     {
-        mensagem_avisar("ERRO", "\"e\" e o \"totiente\" não são coprimos", "dialog-error");
+        mensagem_avisar("ERRO", "\"e\" e o \"totiente\" não são coprimos", "images/erro.png");
         return 0;
     }
 
@@ -520,12 +526,12 @@ int validar_pq(ull p, ull q)
     //Garantir que p e q são primos
     if (p_primo == 0)
     {
-        mensagem_avisar("ERRO", "\"p\" não é primo", "dialog-error");
+        mensagem_avisar("ERRO", "\"p\" não é primo", "images/erro.png");
         return 0;
     }
     if (q_primo == 0)
     {
-        mensagem_avisar("ERRO", "\"q\" não é primo", "dialog-error");
+        mensagem_avisar("ERRO", "\"q\" não é primo", "images/erro.png");
         return 0;
     }
 
