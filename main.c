@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <limits.h>
 
 #define TAM 9999
 
@@ -119,6 +120,13 @@ void on_button_gerar_chave_clicked(GtkWidget *widget, gpointer data)
         
         //Achar n
         ull n = p * q;
+
+        //Overflow
+        if (p > (ULLONG_MAX / q))
+        {
+            mensagem_avisar("ERRO", "\"n\" overflow", "images/erro.png");
+            return;
+        }
 
         //Abrir arquivo
         FILE *f;
@@ -386,10 +394,15 @@ int main (int argc, char *argv[])
 ull criptografar(ull letra, ull e, ull n)
 {
     ull resultado = 1;
-    for (int j = 0; j < e; j++)
+    letra = letra % n;
+    while (e > 0)
     {
-        //Exponenciacao modular
-        resultado = (resultado * letra) % n;
+        if(e % 2 == 1)
+        {
+            resultado = mod_multiplicao(resultado, letra, n);
+        }
+        e = e / 2;
+        letra = mod_multiplicao(letra, letra, n);
     }
 
     return resultado;
