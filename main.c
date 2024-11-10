@@ -32,7 +32,7 @@ void on_Main_destroy(GtkWidget *widget, gpointer data)
         gtk_main_quit();
 }
 
-    void mensagem_avisar(char text[], char secondaty_text[], char icon_name[])
+void mensagem_avisar(char text[], char secondaty_text[], char icon_name[])
 {
 
     g_object_set(mensagem_aviso, "text", text, NULL);
