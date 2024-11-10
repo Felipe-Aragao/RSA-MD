@@ -6,9 +6,11 @@ Grupo 4
 
 ## Windows
 **Opção 1**
+
 Baixar o executável em [releases](https://github.com/Felipe-Aragao/RSA-MD/releases)
 
 **Opção 2**
+
 1 - Baixar [msys2](https://www.msys2.org/)
 
 2 - Pelo terminal do msys2:
