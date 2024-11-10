@@ -1,4 +1,4 @@
-# Projeto de Matemática Discreta
+# Projeto de Matemática Discreta UFAL 2024.1
 
 Desenvolver um progama RSA
 
@@ -7,6 +7,7 @@ Grupo 4
 ## Windows
 **Opção 1**
 Baixar o executável em [releases](https://github.com/Felipe-Aragao/RSA-MD/releases)
+(O conteúdo do release é o mesmo que na pasta "executavel" presente no repositório)
 
 **Opção 2**
 1 - Baixar [msys2](https://www.msys2.org/)
